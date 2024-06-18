@@ -1,0 +1,33 @@
+.terminal{
+  width : 100%;
+  height: 100%;
+}
+
+.xterm-screen{
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.xterm-helper-textarea{
+  display : float !important;
+  background-color: transparent; 
+  width: 0px !important;
+  height : 0px !important;
+}
+
+.xterm-char-measure-element{
+  display : none;
+ 
+}
+
+.xterm-rows > div{
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.xterm-rows {
+  letter-spacing: 2px !important;
+}
+
+.xterm-scroll-area{
+  display : none;
+}
