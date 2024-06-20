@@ -1,7 +1,6 @@
 import { SignIn } from "@clerk/clerk-react";
 import { useEffect } from "react";
-import { redirect } from "react-router-dom";
- 
+
 const SignInPage = () => {
 
     useEffect(() => {

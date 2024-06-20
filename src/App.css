@@ -31,3 +31,93 @@
 .xterm-scroll-area{
   display : none;
 }
+
+#glownigA {
+    --focus-z : 20;
+    z-index : 0;
+}
+
+#glowingA:hover{
+  --focus-z : 6;
+  z-index: 20;
+}
+
+.glow{
+  /* background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACAQMAAACnuvRZAAAABlBMVEWICAu2AgPaGVIgAAAADElEQVQI12NwYHAAAAEEAIG5Lh3wAAAAAElFTkSuQmCCiVBORw0KGgoAAAANSUhEUgAAAAUAAAAEAQMAAAB8/WcDAAAABlBMVEUTFBxMDhRSU53IAAAADklEQVQI12NgYFAAQgYAAQgAQXb2pJkAAAAASUVORK5CYII="); */
+  /* background-color: black; Fallback color */
+  /* background-repeat: no-repeat; */
+  /* width: 1px !important;
+  height: 1px !important; */
+  /* background-repeat: repeat; Repeat dots to cover entire area */
+  /* transform: translate(-20%, -80%); /* Center the dot within its size */
+  /* box-shadow: 30px 10px 100px #cc0000;  */
+  margin: 0px 2px 1px 2px !important;
+  
+}
+
+
+
+
+.papa-div{
+  row-gap: 2px !important;
+  
+}
+
+.papa-div:nth-child(2){
+  transition: opacity 10ms ease-in-out; /* Smooth transition */
+  opacity: 0; /* Initially hide dots */
+
+}
+
+@keyframes show-first {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.papa-div:not(:nth-child(2)) { /* Target all elements except the middle one */
+  animation: show-later 1s ease-in-out forwards; /* Animate others with a delay */
+  animation-delay: 1s; /* Delay by 0.2 seconds */
+}
+
+@keyframes show-later {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+/* .papa-div:hover .glow{
+  animation: spread 2s ease-in-out forwards;
+} */
+
+.papa-div{
+  position : relative;
+}
+
+.thickk{
+  font-size: 25px;
+  color: black;
+
+  transition: color 10ms ease-in-out;
+
+  transition: text-shadow 1s ease-out;
+  text-shadow:
+  0.8px 0.8px 0 #8a8a8e,
+  -0.8px 0.8px 0 #8a8a8e,
+  -0.8px -0.8px 0 #8a8a8e,
+  0.8px -0.8px 0 #8a8a8e;
+
+  font-weight: bolder;
+}
+
+.papa-div:hover .thickk{
+
+  color : #cc0000;
+  text-shadow : none;
+  
+  transition: text-shadow 1s ease-out;
+  transition: color 1s ease-in;
+}
+
+.tick-section{
+  position : absolute;
+  top:0;
+  left: 0;
+}

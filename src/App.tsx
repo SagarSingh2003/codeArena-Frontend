@@ -11,6 +11,7 @@ import SocketProvider from './context/socketContext'
 import FileContextProvider from './context/fileContext'
 import ActiveTabContextProvider from './context/activeTabContext'
 import SocketContextProvider from './context/socketContext'
+import RoleContextProvider from './context/getRoleContext'
 
 
 
@@ -18,23 +19,22 @@ function App() {
   
   return (
       <header>
-        <SignedOut>
+        {/* <SignedOut> */}
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Navigate to="/sign-in" replace={true} />} ></Route>
               <Route path="/sign-in" element={ <SignInPage/> }></Route>
               <Route path="/sign-up" element={ <SignUpPage />} ></Route>
-            </Routes>
-          </BrowserRouter>
-        </SignedOut>
-        <SignedIn>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<SocketContextProvider><PlaygroundContextProvider><Dashboard/></PlaygroundContextProvider></SocketContextProvider>} />
+            {/* </Routes> */}
+          {/* </BrowserRouter> */}
+        {/* </SignedOut> */}
+        {/* <SignedIn> */}
+            {/* <BrowserRouter> */}
+              {/* <Routes> */}
+                <Route path="/" element={<SocketContextProvider><PlaygroundContextProvider><RoleContextProvider><Dashboard/></RoleContextProvider></PlaygroundContextProvider></SocketContextProvider>} />
                 <Route path='/playground' element={<SocketContextProvider><FileContextProvider><ActiveTabContextProvider>< PlaygroundRepl /></ActiveTabContextProvider></FileContextProvider></SocketContextProvider>} />
               </Routes>
-            </BrowserRouter>    
-        </SignedIn>
+          </BrowserRouter>    
+        {/* </SignedIn> */}
       </header>
       
   )
