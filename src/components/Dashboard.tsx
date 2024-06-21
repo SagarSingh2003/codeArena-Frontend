@@ -40,6 +40,9 @@ export default function Dashboard(){
     const [loggedIn , setLoggedIn] = useState(false);
     const {playgroundData , setRefreshPlayground} =  useContext(playgroundDataContext);
 
+
+    console.log(userRole , "userRole");
+
     console.log('playgroundData' , playgroundData);
     
     const {user} = useUser() ;
@@ -56,20 +59,18 @@ export default function Dashboard(){
     const [currentTab , setCurrentTab] = useState<string>("Dashboard")
     console.log(user);
 
-    const color = ["890607" , "cc0000"  , "b70000",
-        "a30000",
-        "8e0000",
-        "7a0000",
-        "660000",
+    const color = ["890607" , "510000", "cc0000"  , "b70000",
         "510000",
+        "890607",
         "3d0000",
         "280000",
+        '280000',
         '140000', "000000"
         ]
     
     function generateNewBoxes (){
         let counter = 0;
-        return new Array(1000).fill(0).map(() => {
+        return new Array(2650).fill(0).map(() => {
             let col;
             let rand;
             counter += 1;
@@ -84,7 +85,8 @@ export default function Dashboard(){
                 rand = Math.floor(Math.random() * 7);
             }
 
-            return <div className='glow z-10'  style={{backgroundColor : `#${col[rand]}` , width: "1px" , height: "2px" , margin: "1px"}} ></div>
+
+            return <div id="div-spot" className='glow z-10'  style={{backgroundColor : `#${col[rand]}` , width: "1.5px" , height: "1.5px" , margin: "0.4px"}} ></div>
         })
     }
 
@@ -284,10 +286,10 @@ export default function Dashboard(){
 
                             <section>
                             
-                            {userInfo  && userInfo.role === "teacher" ? 
+                            {userRole  && userRole.role === "teacher" ? 
 
                                 <section className=' py-[40px] text-[40px] font-semibold'>
-                                    Welcome {userInfo.username} , what would you like to Teach today? 
+                                    Welcome {userRole.username} , what would you like to Teach today? 
                                 </section> 
                                 
                                 : 
@@ -314,16 +316,17 @@ export default function Dashboard(){
                             <CourseCard rating ={3}/>
                             <CourseCard rating={4}/>
 
-                            <div className='h-[180px] bg-[black] flex flex-row flex-wrap  papa-div ' style={{width: "150px"}} onMouseOver={() => {
+                            <div className='h-[180px] bg-[black] flex flex-row items-center justify-center flex-wrap  papa-div ' style={{width: "230px"}} onMouseOver={() => {
                                 setShowAnimation(true);
                             }} onMouseOut={() => {
                                 setShowAnimation(false);
                             }
 
                             }>      
-                                        <section className='tick-section w-full h-full flex items-center  justify-center z-20'>
-                                            <h1 className='thickk 20px ' style={{fontWeight: "50px"}}  >Ruby</h1>
-
+                                        <section className='tick-section w-full h-full flex flex-col items-center  justify-center z-20'>
+                                            <h1 className='thickk 20px ' style={{fontWeight: "50px"}}  >Ruby
+                                            </h1>
+                                            
                                         </section>
                                         
                                         {...arrofBoxes}

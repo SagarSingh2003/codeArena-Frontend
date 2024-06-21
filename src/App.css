@@ -59,30 +59,52 @@
 
 
 .papa-div{
-  row-gap: 2px !important;
+  row-gap: 0.6px !important;
   
 }
 
-.papa-div:nth-child(2){
-  transition: opacity 10ms ease-in-out; /* Smooth transition */
+
+.papa-div{
+  opacity: 0; /* Initially hide containers */
+  transition: opacity 2s ease-in-out; /* Smooth transition */
+  counter-increment: myCounter;
+}
+
+.papa-div:nth-of-type(odd) { /* Target odd numbered containers (1st, 3rd, ...) */
+  animation: show-later 2s ease-in-out forwards; /* Animate with delay */
+  animation-delay: calc(1s * counter(myCounter) - 0.4s); /* Delay based on counter */
+}
+.papa-div:nth-of-type(even){
+  transition: opacity 2s ease-in-out; /* Smooth transition */
   opacity: 0; /* Initially hide dots */
-
-}
-
-@keyframes show-first {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-.papa-div:not(:nth-child(2)) { /* Target all elements except the middle one */
-  animation: show-later 1s ease-in-out forwards; /* Animate others with a delay */
-  animation-delay: 1s; /* Delay by 0.2 seconds */
+  animation: show-later 2s ease-in-out forwards; /* Animate with delay */
+  animation-delay: calc(1s * counter(myCounter)); /* Delay based on counter */
 }
 
 @keyframes show-later {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
+
+h4.thickk{
+  display: none;
+  font-size: 12px;
+  transition:  color 500ms ease-in-out; 
+  font-weight: semibold;
+  color:black !important;
+  border-radius: 100% !important;
+  box-shadow: 0 0 30px 2px rgba(0, 0, 0, 0.3) !important;
+  background-color: black !important;
+}
+
+.papa-div:hover  h4.thickk{
+  display: block;
+  color: white !important;
+  transition: color 10ms ease-out;
+  background-color: black !important;
+}
+
+
 /* .papa-div:hover .glow{
   animation: spread 2s ease-in-out forwards;
 } */
@@ -92,12 +114,12 @@
 }
 
 .thickk{
-  font-size: 25px;
+  font-size: 30px;
   color: black;
 
-  transition: color 10ms ease-in-out;
+  transition: color 1ms ease-in-out;
 
-  transition: text-shadow 1s ease-out;
+  transition: text-shadow 1ms ease-in-out;
   text-shadow:
   0.8px 0.8px 0 #8a8a8e,
   -0.8px 0.8px 0 #8a8a8e,
