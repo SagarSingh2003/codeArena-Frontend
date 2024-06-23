@@ -129,7 +129,7 @@ export default function Playground(){
 function createRepl( userInfo : UserInfo  , setCreateState : any , socket : any) {
     
     
-    socket.emit("create_container" , userInfo.replId , userInfo.type , "codearena-server-v0.0.1" , (msg : boolean) => {
+    socket.emit("create_container" , userInfo.replId , userInfo.type , "sagarsingh2003/codearena-server:v0.0.2" , (msg : boolean) => {
         const  containerCreated = msg;
     
         if(containerCreated){
