@@ -23,8 +23,8 @@ export default function Playground(){
     const [playgroundName , setPlaygroundName] = useState();
     const [createState , setCreateState] = useState(null)
     const {playgroundData} = useContext(playgroundDataContext);
-    const {socket} = useContext(SocketContext);
     const {user} = useUser() ;
+    const socket = useContext(SocketContext); 
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -62,7 +62,7 @@ export default function Playground(){
                 setCreateState("not-done");
                 const date = new Date();
 
-                createRepl({email : user?.emailAddresses[0].emailAddress! , replId : String(replId) , type : "react" , createdAt : date.toLocaleDateString() } , setCreateState);
+                createRepl({email : user?.emailAddresses[0].emailAddress! , replId : String(replId) , type : "react" , createdAt : date.toLocaleDateString() } , setCreateState , socket);
 
             }} 
             
@@ -126,19 +126,32 @@ export default function Playground(){
 
 
 
-function createRepl( userInfo : UserInfo  , setCreateState : any) {
-  
-    fetch(api + "/user/create-playground" , {
-        method : "POST",
-        headers : {
-            "Content-Type" : "application/json",
-            "Authorization" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzYWdhciI6InNpbmdoIiwiYXM7bGRramZhO2xzamRrZmxqa2FzZGxmamthcyI6ImFkbGZramFzZDtsa2ZqYTtsc2RqZmFsIn0.NYirkr9paUfUq0UEAe4eE_g2Nn6Dde6Wyu0A3pNONo8"
-        },
-        body: JSON.stringify(userInfo)
-    }).then((res) => {
-        console.log(res.status);
-        setCreateState("done");
+function createRepl( userInfo : UserInfo  , setCreateState : any , socket : any) {
+    
+    
+    socket.emit("create_container" , userInfo.replId , userInfo.type , "codearena-server-v0.0.1" , (msg : boolean) => {
+        const  containerCreated = msg;
+    
+        if(containerCreated){
+        
+            setTimeout(() => {
+                fetch(api + "/user/create-playground" , {
+                    method : "POST",
+                    headers : {
+                        "Content-Type" : "application/json",
+                        "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzYWdhciI6InNpbmdoIiwiYXM7bGRramZhO2xzamRrZmxqa2FzZGxmamthcyI6ImFkbGZramFzZDtsa2ZqYTtsc2RqZmFsIn0.NYirkr9paUfUq0UEAe4eE_g2Nn6Dde6Wyu0A3pNONo8"
+                    },
+                    body: JSON.stringify(userInfo)
+                }).then((res) => {
+                    console.log(res.status);
+                    setCreateState("done");
+                });
+            } , 2000);
+    
+        }
+    
     })
+
   
   }
 
@@ -147,7 +160,7 @@ function getPlayground(playgroundData : any , setGetState : any){
     fetch(api + "/user/get-playground" , {
         method: "GET",
         headers: {
-            "Authorization" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzYWdhciI6InNpbmdoIiwiYXM7bGRramZhO2xzamRrZmxqa2FzZGxmamthcyI6ImFkbGZramFzZDtsa2ZqYTtsc2RqZmFsIn0.NYirkr9paUfUq0UEAe4eE_g2Nn6Dde6Wyu0A3pNONo8",
+            "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzYWdhciI6InNpbmdoIiwiYXM7bGRramZhO2xzamRrZmxqa2FzZGxmamthcyI6ImFkbGZramFzZDtsa2ZqYTtsc2RqZmFsIn0.NYirkr9paUfUq0UEAe4eE_g2Nn6Dde6Wyu0A3pNONo8",
             "replId" : `${playgroundData.replId}`
         }
     }).then((res) => {
