@@ -8,7 +8,7 @@ export const playgroundDataContext = createContext(null);
 
 export default function PlaygroundContextProvider ({children} : {children : ReactNode}) {
 
-        const Token = import.meta.env.VITE_PLAGROUND_TOKEN
+        const Token = import.meta.env.VITE_PLAYGROUND_TOKEN
 
         const [playgroundData ,setPlaygroundData] = useState(null);
         const {user} = useUser();

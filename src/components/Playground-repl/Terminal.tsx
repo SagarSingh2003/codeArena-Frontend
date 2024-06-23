@@ -26,7 +26,7 @@ export default function AddTerminal({playgroundType , playgroundName  } : {playg
 
             }) 
 
-            socket.emit("execute" , "\r"  , playgroundName , playgroundType)
+            socket.emit("execute" , "\r"  , playgroundName , playgroundType);
             socket.on("output" , (msg) => {
                 console.log(msg , "output");
                 terminal.write(`${msg}`);

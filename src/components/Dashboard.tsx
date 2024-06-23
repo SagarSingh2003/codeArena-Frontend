@@ -1,4 +1,4 @@
-import { useUser , UserButton } from '@clerk/clerk-react';
+import { useUser , UserButton} from '@clerk/clerk-react';
 import dashboard from '../assets/dashboard.svg';
 import terminal from '../assets/playground.svg';
 import deleteLogo from '../assets/deleteLogo.svg';
@@ -13,6 +13,7 @@ import { useToast } from './ui/use-toast';
 import CourseCard from './DashboardComponents/CourseCard';
 import { useNavigate } from 'react-router-dom';
 import { RoleContext } from '@/context/getRoleContext';
+import { SocketContext } from '@/context/socketContext';
 
 export default function Dashboard(){
 
@@ -40,7 +41,6 @@ export default function Dashboard(){
     const [loggedIn , setLoggedIn] = useState(false);
     const {playgroundData , setRefreshPlayground} =  useContext(playgroundDataContext);
 
-
     console.log(userRole , "userRole");
 
     console.log('playgroundData' , playgroundData);
@@ -52,7 +52,6 @@ export default function Dashboard(){
     const expRef = useRef();
     const [activeDelete , setActiveDelete] = useState({confirm : false , id : ""});
     const [deleteAction , setDeleteAction] = useState({confirm : false , id : ""});
-
     const activeStyle = {backgroundColor:"#E7E7E8" , color:"#1b181f" ,};
 
     const {toast} = useToast();
@@ -70,7 +69,7 @@ export default function Dashboard(){
     
     function generateNewBoxes (){
         let counter = 0;
-        return new Array(2650).fill(0).map(() => {
+        return new Array(1900).fill(0).map(() => {
             let col;
             let rand;
             counter += 1;
@@ -86,7 +85,7 @@ export default function Dashboard(){
             }
 
 
-            return <div id="div-spot" className='glow z-10'  style={{backgroundColor : `#${col[rand]}` , width: "1.5px" , height: "1.5px" , margin: "0.4px"}} ></div>
+            return <div id="div-spot" className='glow z-10'  style={{backgroundColor : `#${col[rand]}` , width: "2px" , height: "2px" , margin: "0.4px"}} ></div>
         })
     }
 
@@ -103,7 +102,7 @@ export default function Dashboard(){
                 setArrOfBoxes((val) => {
                 return generateNewBoxes()
                 })
-            } , 500);
+            } , 300);
         }
 
         return () => {

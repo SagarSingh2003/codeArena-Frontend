@@ -12,6 +12,7 @@ import FileContextProvider from './context/fileContext'
 import ActiveTabContextProvider from './context/activeTabContext'
 import SocketContextProvider from './context/socketContext'
 import RoleContextProvider from './context/getRoleContext'
+import Playground from './components/Playground'
 
 
 
@@ -31,6 +32,7 @@ function App() {
             {/* <BrowserRouter> */}
               {/* <Routes> */}
                 <Route path="/" element={<SocketContextProvider><PlaygroundContextProvider><RoleContextProvider><Dashboard/></RoleContextProvider></PlaygroundContextProvider></SocketContextProvider>} />
+                <Route path="/playground-dashboard" element={<SocketContextProvider><Playground/></SocketContextProvider>} />
                 <Route path='/playground' element={<SocketContextProvider><FileContextProvider><ActiveTabContextProvider>< PlaygroundRepl /></ActiveTabContextProvider></FileContextProvider></SocketContextProvider>} />
               </Routes>
           </BrowserRouter>    
