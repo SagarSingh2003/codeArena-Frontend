@@ -33,6 +33,8 @@ export default function PlaygroundRepl () {
     const {activeTab , setActiveTab} = useContext(ActiveTabContext); 
     const [refresh , setRefreshComponent] = useState(0);
     const [startSaving , setStartSaving] = useState(false);
+    const [previewUrl , setPreviewUrl] = useState("");
+
     const editorRef = useRef();
 
     console.log("playgroundName ...." ,playgroundName);
@@ -136,6 +138,15 @@ export default function PlaygroundRepl () {
     } , [socket])
 
     useEffect(() => {
+      if(playgroundName){
+        
+        socket.emit("provide-preview-url" , playgroundName , (url) => {
+            setPreviewUrl(url);
+        })
+      };
+    } , [socket]);
+
+    useEffect(() => {
 
         document.addEventListener('keydown', function(event) {
 
@@ -235,7 +246,7 @@ export default function PlaygroundRepl () {
                                   <section className="w-full h-[30px] flex flex-row box-border m-[10px]">
                                     <section 
                                         onClick={() => {
-                                          iframeRef.current.src = "http://172.17.0.2:5555" ;
+                                          iframeRef.current.src = previewUrl ;
                                         }}
                                         
                                         className="bg-[#27272a] flex flex-row items-center gap-2 p-[10px] rounded-[5px] ">  
@@ -245,7 +256,7 @@ export default function PlaygroundRepl () {
                                         <img src={refresh_btn} alt="refresh" className=" w-[20px] h-[20px]" />
                                     </section>
                                   </section>
-                                  <iframe ref={iframeRef} src="http://172.17.0.2:5555"  className="w-full h-full" ></iframe>
+                                  <iframe ref={iframeRef} src={previewUrl}  className="w-full h-full" ></iframe>
                             </section>
                   </ResizablePanel>
                 </ResizablePanelGroup>
