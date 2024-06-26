@@ -95,7 +95,7 @@ export default function Playground(){
 
                                         setPlaygroundName(playground.replId);
                                         setGetState({done :"not-done" , id : playground.replId});
-                                        getPlayground(playground , setGetState);
+                                        getPlayground(playground , setGetState , socket);
                                     
                                     }}
                                     
@@ -128,12 +128,14 @@ export default function Playground(){
 
 function createRepl( userInfo : UserInfo  , setCreateState : any , socket : any) {
     
-    
+  
+
     socket.emit("create_container" , userInfo.replId , userInfo.type , "sagarsingh2003/codearena-server:v0.0.2" , (msg : boolean) => {
         const  containerCreated = msg;
-    
-        if(containerCreated){
         
+        if(containerCreated){
+            socket.emit("connect-to-playground" , userInfo.replId);
+            
             setTimeout(() => {
                 fetch(api + "/user/create-playground" , {
                     method : "POST",
@@ -155,18 +157,33 @@ function createRepl( userInfo : UserInfo  , setCreateState : any , socket : any)
   
   }
 
-function getPlayground(playgroundData : any , setGetState : any){
+function getPlayground(playgroundData : any , setGetState : any , socket : any){
     console.log(playgroundData);
-    fetch(api + "/user/get-playground" , {
-        method: "GET",
-        headers: {
-            "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzYWdhciI6InNpbmdoIiwiYXM7bGRramZhO2xzamRrZmxqa2FzZGxmamthcyI6ImFkbGZramFzZDtsa2ZqYTtsc2RqZmFsIn0.NYirkr9paUfUq0UEAe4eE_g2Nn6Dde6Wyu0A3pNONo8",
-            "replId" : `${playgroundData.replId}`
+
+    socket.emit("create_container" , playgroundData.replId , playgroundData.type , "sagarsingh2003/codearena-server:v0.0.2" , (msg : boolean) => {
+        const  containerCreated = msg;
+        
+        if(containerCreated){
+            socket.emit("connect-to-playground" , playgroundData.replId);
+            
+            setTimeout(() => {
+                                  
+                    fetch(api + "/user/get-playground" , {
+                        method: "GET",
+                        headers: {
+                            "Authorization" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzYWdhciI6InNpbmdoIiwiYXM7bGRramZhO2xzamRrZmxqa2FzZGxmamthcyI6ImFkbGZramFzZDtsa2ZqYTtsc2RqZmFsIn0.NYirkr9paUfUq0UEAe4eE_g2Nn6Dde6Wyu0A3pNONo8",
+                            "replId" : `${playgroundData.replId}`
+                        }
+                    }).then((res) => {
+                        console.log(res.status);
+                        if(res.status === 200){
+                            setGetState("done");  
+                        }
+                    })
+                    
+            } , 2000);
+    
         }
-    }).then((res) => {
-        console.log(res.status);
-        if(res.status === 200){
-            setGetState("done");  
-        }
+    
     })
 }

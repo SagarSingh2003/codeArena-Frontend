@@ -4,7 +4,7 @@ import DirStructure from "./FileBrowserComponent/DirStructure";
 import { SocketContext } from "@/context/socketContext";
 
 
-export default function FileBrowser({fileBrowserContent , playgroundType , playgroundName } : {fileBrowserContent : object , socket : object , playgroundType : string , playgroundName : string }){
+export default function FileBrowser({fileBrowserContent , playgroundType , playgroundName } : {fileBrowserContent : object  , playgroundType : string , playgroundName : string }){
 
     const socket = useContext(SocketContext);
     

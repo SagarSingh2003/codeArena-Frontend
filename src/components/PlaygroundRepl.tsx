@@ -90,6 +90,8 @@ export default function PlaygroundRepl () {
         socket.emit("saveplayground" , playgroundName , playgroundType , (data : string) => {
           console.log(data);
         });
+        
+        e.preventDefault();
 
       }
     
@@ -99,9 +101,14 @@ export default function PlaygroundRepl () {
         window.removeEventListener('beforeunload', beforeUnload);
       };
 
-    }, [activeTab]);
+    }, []);
 
 
+    useEffect(() => {
+      socket.on("output" , (msg : any) => {
+        console.log(msg);
+      })
+    })
     useEffect(() => {
 
       if(startSaving && socket){
@@ -236,7 +243,7 @@ export default function PlaygroundRepl () {
                             </ResizablePanel>
                             <ResizableHandle  />
                             <ResizablePanel defaultSize={35} className='border  border-[#2b2b2b] border-b-0 min-h-[300px]'>
-                                  <AddTerminal playgroundType={playgroundType} playgroundName={playgroundName} socket={socket}/>
+                                  <AddTerminal playgroundType={playgroundType} playgroundName={playgroundName} sockett={socket}/>
                             </ResizablePanel>             
                         </ResizablePanelGroup>
                   </ResizablePanel>

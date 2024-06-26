@@ -4,19 +4,15 @@ import "@xterm/xterm/css/xterm.css";
 import { useContext, useEffect,  useRef,  useState } from 'react';
 import { Socket, io } from 'socket.io-client';
 
-export default function AddTerminal({playgroundType , playgroundName  } : {playgroundType : string , playgroundName : string , socket : object}){
+export default function AddTerminal({playgroundType , playgroundName  , sockett} : {playgroundType : string , playgroundName : string , sockett : object}){
 
-    const [socket ,setSocket] = useState();
+    const [socket ,setSocket] = useState(sockett);
     const [data , setData] = useState("");
     const terminalRef = useRef();
     const terminal = new Terminal({cursorBlink : true , convertEol : true});
 
 
-    useEffect(() => {
-
-            const socket = io("http://localhost:3000");
-            setSocket(socket);
-    
+    useEffect(() => {    
             
             
             terminal.onData((data) => { 
@@ -27,11 +23,16 @@ export default function AddTerminal({playgroundType , playgroundName  } : {playg
             }) 
 
             socket.emit("execute" , "\r"  , playgroundName , playgroundType);
+
             socket.on("output" , (msg) => {
+                console.log("output recieved");
                 console.log(msg , "output");
                 terminal.write(`${msg}`);
             })
-
+            
+            socket.on("file-provided" , (data) => {
+              console.log(data);
+            })
             return () => {
                 socket.disconnect();
             }
@@ -57,15 +58,10 @@ export default function AddTerminal({playgroundType , playgroundName  } : {playg
 
     useEffect(() => {
         
-            // let isSpaceKey = false;
-            
             // @ts-ignore
             terminal.open(terminalRef.current);
 
-            //@ts-ignore
-            // terminalRef.current?.addEventListener('keydown' , (event) => {if(event.code === "Space") { isSpaceKey = true}})
-            
-            
+
     } , [])
 
     
