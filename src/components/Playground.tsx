@@ -22,6 +22,7 @@ export default function Playground(){
     const [playgroundType , setPlaygroundType] = useState("react");
     const [playgroundName , setPlaygroundName] = useState();
     const [createState , setCreateState] = useState(null)
+
     const {playgroundData} = useContext(playgroundDataContext);
     const {user} = useUser() ;
     const socket = useContext(SocketContext); 
@@ -84,7 +85,7 @@ export default function Playground(){
             </section>
             {playgroundData !== null  && playgroundData.length !== 0? 
                         
-                        <section>
+                        <section className="h-[100%]">
                             <section className="pt-[30px] font-bold text-[20px] border-b mb-[20px]">
                                 <h4>RESUME PLAYGROUND</h4>
                             </section> 
@@ -99,7 +100,7 @@ export default function Playground(){
                                     
                                     }}
                                     
-                                    className='border rounded-sm flex flex-row items-center justify-start px-[20px]  hover:border-[#6366F1] cursor-pointer min-h-[64px] w-[893px] box-border'>
+                                    className='border rounded-sm flex flex-row items-center justify-start px-[20px]  hover:border-[#6366F1] cursor-pointer min-h-[64px] w-[893px] box-border overflow-y-scroll max-h-[600px]'>
                                          
                                          <section className="bg-[#ECECEE] p-[7px] rounded-sm">
                                                 <img src={react} alt="react-playground" className="h-[20px] "/>

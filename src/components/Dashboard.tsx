@@ -278,7 +278,7 @@ export default function Dashboard(){
                         <span >Teach on CodeArena</span>
                     </section>
                 }
-                <section className="w-full h-[94%] px-[30px]">
+                <section className="w-full h-[94%] px-[30px] bg-white">
                     {currentTab !== "Playground" ?
                     <>
                         {loggedIn ? 
