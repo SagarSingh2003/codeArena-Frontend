@@ -58,58 +58,58 @@ export default function Dashboard(){
     const [currentTab , setCurrentTab] = useState<string>("Dashboard")
     console.log(user);
 
-    const color = ["890607" , "510000", "cc0000"  , "b70000",
-        "510000",
-        "890607",
-        "3d0000",
-        "280000",
-        '280000',
-        '140000', "000000"
-        ]
+    // const color = ["890607" , "510000", "cc0000"  , "b70000",
+    //     "510000",
+    //     "890607",
+    //     "3d0000",
+    //     "280000",
+    //     '280000',
+    //     '140000', "000000"
+    //     ]
     
-    function generateNewBoxes (){
-        let counter = 0;
-        return new Array(1900).fill(0).map(() => {
-            let col;
-            let rand;
-            counter += 1;
-            if(counter < 250){
-                col = color.slice(0 , 7);
-                rand = Math.floor(Math.random() * 7);
-            }else if(counter >= 250 && counter < 750){
-                col = color.slice(3 , 11);
-                rand = Math.floor(Math.random() * 9);
-            }else if(counter >= 750){
-                col = color.slice(5 , 12);
-                rand = Math.floor(Math.random() * 7);
-            }
+    // function generateNewBoxes (){
+    //     let counter = 0;
+    //     return new Array(1900).fill(0).map(() => {
+    //         let col;
+    //         let rand;
+    //         counter += 1;
+    //         if(counter < 250){
+    //             col = color.slice(0 , 7);
+    //             rand = Math.floor(Math.random() * 7);
+    //         }else if(counter >= 250 && counter < 750){
+    //             col = color.slice(3 , 11);
+    //             rand = Math.floor(Math.random() * 9);
+    //         }else if(counter >= 750){
+    //             col = color.slice(5 , 12);
+    //             rand = Math.floor(Math.random() * 7);
+    //         }
 
 
-            return <div id="div-spot" className='glow z-10'  style={{backgroundColor : `#${col[rand]}` , width: "2px" , height: "2px" , margin: "0.4px"}} ></div>
-        })
-    }
+    //         return <div id="div-spot" className='glow z-10'  style={{backgroundColor : `#${col[rand]}` , width: "2px" , height: "2px" , margin: "0.4px"}} ></div>
+    //     })
+    // }
 
-    const [arrofBoxes , setArrOfBoxes] = useState([]);
-    const [showAnimation , setShowAnimation] = useState(false);
+    // const [arrofBoxes , setArrOfBoxes] = useState([]);
+    // const [showAnimation , setShowAnimation] = useState(false);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        let intervalId : any;
+    //     let intervalId : any;
 
-        if(showAnimation){
+    //     if(showAnimation){
                     
-            intervalId = setInterval(() => {
-                setArrOfBoxes((val) => {
-                return generateNewBoxes()
-                })
-            } , 300);
-        }
+    //         intervalId = setInterval(() => {
+    //             setArrOfBoxes((val) => {
+    //             return generateNewBoxes()
+    //             })
+    //         } , 300);
+    //     }
 
-        return () => {
-            setArrOfBoxes([]);
-            clearInterval(intervalId);
-        }
-    } , [showAnimation])
+    //     return () => {
+    //         setArrOfBoxes([]);
+    //         clearInterval(intervalId);
+    //     }
+    // } , [showAnimation])
 
     useEffect(() => {
         
@@ -122,131 +122,131 @@ export default function Dashboard(){
     } , [user])
 
 
-    console.log(userInfo);
+    // console.log(userInfo);
 
-    useEffect(() => {
+    // useEffect(() => {
 
 
-        if(userInfo && userInfo.role === "teacher"){
-            fetch(`${api}/teacher/createTeacher`, {
-                method : "POST",
-                headers: {
-                    "Authorization" : `Bearer ${token}`,
-                    "Content-Type" : "application/json" 
-                },
-                body : JSON.stringify({
-                    useremail : user?.emailAddresses[0].emailAddress ,
-                    name : userInfo.name,
-                    exp : userInfo.experience
-                })
+    //     if(userInfo && userInfo.role === "teacher"){
+    //         fetch(`${api}/teacher/createTeacher`, {
+    //             method : "POST",
+    //             headers: {
+    //                 "Authorization" : `Bearer ${token}`,
+    //                 "Content-Type" : "application/json" 
+    //             },
+    //             body : JSON.stringify({
+    //                 useremail : user?.emailAddresses[0].emailAddress ,
+    //                 name : userInfo.name,
+    //                 exp : userInfo.experience
+    //             })
     
-            }).then( async (res) => {
+    //         }).then( async (res) => {
 
-                const response = await res.json();
-                if(response.status === 200){
-                    setRefreshRole((c : number) => c + 1);
-                }
+    //             const response = await res.json();
+    //             if(response.status === 200){
+    //                 setRefreshRole((c : number) => c + 1);
+    //             }
             
-            })
-        }else if(userInfo && userInfo.role === "learner"){
-            fetch(`${api}/learner/createLearner`, {
-                method : "POST",
-                headers: {
-                    "Authorization" : `Bearer ${token}`,
-                    "Content-Type" : "application/json" 
-                },
-                body : JSON.stringify({
-                    useremail : user?.emailAddresses[0].emailAddress ,
-                    name : user?.username || user?.fullName || user?.firstName
-                })
+    //         })
+    //     }else if(userInfo && userInfo.role === "learner"){
+    //         fetch(`${api}/learner/createLearner`, {
+    //             method : "POST",
+    //             headers: {
+    //                 "Authorization" : `Bearer ${token}`,
+    //                 "Content-Type" : "application/json" 
+    //             },
+    //             body : JSON.stringify({
+    //                 useremail : user?.emailAddresses[0].emailAddress ,
+    //                 name : user?.username || user?.fullName || user?.firstName
+    //             })
     
-            }).then( async (res) => {
+    //         }).then( async (res) => {
 
-                const response = await res.json();
-                if(res.status === 200){
-                    setTimeout(() => {
-                        setRefreshRole((c : number) => c + 1);
-                    } , 4000);
-                }
+    //             const response = await res.json();
+    //             if(res.status === 200){
+    //                 setTimeout(() => {
+    //                     setRefreshRole((c : number) => c + 1);
+    //                 } , 4000);
+    //             }
             
-            })
-        }
+    //         })
+    //     }
 
-    } , [userInfo]);
+    // } , [userInfo]);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    switch(currentPage) {
-        case 1 : 
-            setShowPage(
+    // switch(currentPage) {
+    //     case 1 : 
+    //         setShowPage(
     
-            <section className='bg-[white]'>
-                What Role do you want on CodeArena ?
-                <button onClick={() => {
-                    setRole('learner');
-                    setCurrentPage((c) => c + 1);
-                }}>
-                    Learner
-                </button>
-                <button onClick={() => {
-                    setRole('teacher');
-                    setCurrentPage((c) => c + 1);
-                }}>
-                    Teacher
-                </button>
-            </section>
+    //         <section className='bg-[white]'>
+    //             What Role do you want on CodeArena ?
+    //             <button onClick={() => {
+    //                 setRole('learner');
+    //                 setCurrentPage((c) => c + 1);
+    //             }}>
+    //                 Learner
+    //             </button>
+    //             <button onClick={() => {
+    //                 setRole('teacher');
+    //                 setCurrentPage((c) => c + 1);
+    //             }}>
+    //                 Teacher
+    //             </button>
+    //         </section>
 
-            ) 
+    //         ) 
 
-            break;
-        case 2 : 
-            setShowPage(
+    //         break;
+    //     case 2 : 
+    //         setShowPage(
                 
                 
-                role === "teacher" ?
+    //             role === "teacher" ?
                 
-                <section>   
-                    <section>
-                        <p>Enter your Name :</p> 
-                        <input type="text" ref={nameRef}/>
-                    </section>
-                    <section>
-                        <p>Enter your professional Experience</p>
-                        <input type="text" ref={expRef}/>
-                    </section>
-                    <section onClick={() => {
-                        if (nameRef.current.value && expRef.current.value) setUserInfo({role : "teacher" , name : nameRef.current.value , experience : expRef.current.value })
-                    }}>
-                        {"->"}
-                    </section>
-                </section>
+    //             <section>   
+    //                 <section>
+    //                     <p>Enter your Name :</p> 
+    //                     <input type="text" ref={nameRef}/>
+    //                 </section>
+    //                 <section>
+    //                     <p>Enter your professional Experience</p>
+    //                     <input type="text" ref={expRef}/>
+    //                 </section>
+    //                 <section onClick={() => {
+    //                     if (nameRef.current.value && expRef.current.value) setUserInfo({role : "teacher" , name : nameRef.current.value , experience : expRef.current.value })
+    //                 }}>
+    //                     {"->"}
+    //                 </section>
+    //             </section>
                 
-                :
+    //             :
 
-                null
+    //             null
                 
-            )
+    //         )
 
-            break;
-    }
+    //         break;
+    // }
 
-    } , [currentPage])
+    // } , [currentPage])
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if(role === "learner"){
-            console.log("learner");
-            setUserInfo({role : "learner"});
-        }
-    } , [role])
+    //     if(role === "learner"){
+    //         console.log("learner");
+    //         setUserInfo({role : "learner"});
+    //     }
+    // } , [role])
 
-    if(user && !userRole){
-        return(
-            <>
-                {showPage}
-            </>
-        )
-    }
+    // if(user && !userRole){
+    //     return(
+    //         <>
+    //             {showPage}
+    //         </>
+    //     )
+    // }
 
 
     return(
@@ -263,7 +263,7 @@ export default function Dashboard(){
                 loggedIn ? 
                     <section className="w-full h-[6%] border-b border-b-[#E4E4E7] flex items-center justify-end px-[20px]">
                         <UserButton showName/>
-                        <span>Teach on CodeArena</span>
+                        {/* <span>Teach on CodeArena</span> */}
                     </section>
 
                     :
@@ -305,7 +305,7 @@ export default function Dashboard(){
                          null
 
                         }
-                        <section>
+                        {/* <section>
                             <input type="text" placeholder='search for courses' className='p-[10px]'/>
                         </section>
                         <section className='grid grid-cols-5 gap-2'>
@@ -333,7 +333,7 @@ export default function Dashboard(){
                                     
                             </div>
                             
-                        </section>
+                        </section> */}
                         {playgroundData !== null  && playgroundData.length !== 0? 
                         
                             <>

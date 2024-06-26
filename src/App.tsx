@@ -20,23 +20,24 @@ function App() {
   
   return (
       <header>
-        {/* <SignedOut> */}
+        <SignedOut>
           <BrowserRouter>
             <Routes>
+              <Route path="/" element={<Navigate to="/sign-in" replace={true} />} ></Route>
               <Route path="/sign-in" element={ <SignInPage/> }></Route>
               <Route path="/sign-up" element={ <SignUpPage />} ></Route>
-            {/* </Routes> */}
-          {/* </BrowserRouter> */}
-        {/* </SignedOut> */}
-        {/* <SignedIn> */}
-            {/* <BrowserRouter> */}
-              {/* <Routes> */}
+            </Routes>
+          </BrowserRouter>
+        </SignedOut>
+        <SignedIn>
+            <BrowserRouter>
+              <Routes>
                 <Route path="/" element={<SocketContextProvider><PlaygroundContextProvider><RoleContextProvider><Dashboard/></RoleContextProvider></PlaygroundContextProvider></SocketContextProvider>} />
                 <Route path="/playground-dashboard" element={<SocketContextProvider><Playground/></SocketContextProvider>} />
                 <Route path='/playground' element={<SocketContextProvider><FileContextProvider><ActiveTabContextProvider>< PlaygroundRepl /></ActiveTabContextProvider></FileContextProvider></SocketContextProvider>} />
               </Routes>
           </BrowserRouter>    
-        {/* </SignedIn> */}
+        </SignedIn>
       </header>
       
   )
